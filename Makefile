@@ -6,7 +6,7 @@
 #    By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/18 01:41:07 by tfiguero          #+#    #+#              #
-#    Updated: 2023/09/18 03:56:10 by tfiguero         ###   ########.fr        #
+#    Updated: 2023/09/28 06:21:59 by tfiguero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = fractol
 CC = gcc
 RM = rm -rf
 LIBC = ar -rcs
-FLAGS = -Wall -Wextra -Werror -O3 -g -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -O2 -g -fsanitize=address
 MN_LIB = ./miniLibX/
 FRAME = -framework OpenGL -framework AppKit
 
@@ -39,10 +39,12 @@ dir:
 	@mkdir -p $(D_OBJ)
 
 $(D_OBJ)/%.o: $(L_SRC)/%.c
-	@$(CC) -MMD $(FLAGS) -c $< -o $@ $(INC)
+	$(CC) -MMD $(FLAGS) -c $< -o $@ $(INC)
 
-$(NAME): $(OBJ)
-	@$(CC) $(FLAGS) $(OBJ) $(L_ML) $(FRAME) -o $(NAME) $(INC)
+$(NAME):: $(OBJ)
+	$(CC) $(FLAGS) $(OBJ) $(L_ML) $(FRAME) -o $(NAME) $(INC)
+	
+$(NAME)::
 	@echo "Hello, $(NAME) already compiled 🌚"
 .PHONY: clean fclean re
 

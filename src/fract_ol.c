@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 02:03:42 by tfiguero          #+#    #+#             */
-/*   Updated: 2023/09/19 22:50:24 by tfiguero         ###   ########.fr       */
+/*   Updated: 2023/09/28 07:35:04 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,9 @@ int	main()
 	int		max_im;
 	double	re;
 	double	im;
+	int		i;
 	
-	a = new_program(1000, 1000, "New Program");
+	a = new_program(1000, 1000, "Fractlol");
 	if (!a.mlx_ptr || !a.win_ptr)
 		return (1);
 	png = new_img(1000, 1000, a);
@@ -99,8 +100,9 @@ int	main()
 		{
 			re = -2.0 + (double)x * (2.0 - (-2.0)) / 1000;
 			im = max_im + (double)y * (-2.0 - 2.0) / 1000;
-			if(ft_is_in_mandelbrot(re, im) == 1)
-				put_pixel_img(png, x, y, (0x000F0F0F) + y/4);
+			i = ft_is_in_julia(-0.745429, 0.05);
+			if(i)
+				put_pixel_img(png, x, y, (0xFCBE11) * i);
 			// ft_mandelbrot(re,im);
 			y++;
 		}

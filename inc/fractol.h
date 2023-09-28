@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 01:59:40 by tfiguero          #+#    #+#             */
-/*   Updated: 2023/09/19 22:26:16 by tfiguero         ###   ########.fr       */
+/*   Updated: 2023/09/28 06:32:34 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,5 @@ typedef struct s_img
 
 void	ft_mandelbrot(double x, double y);
 int		ft_is_in_mandelbrot(double x, double y);
+int		ft_is_in_julia(double cx, double cy);
 #endif
