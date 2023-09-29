@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 02:03:42 by tfiguero          #+#    #+#             */
-/*   Updated: 2023/09/28 07:35:04 by tfiguero         ###   ########.fr       */
+/*   Updated: 2023/09/29 11:20:18 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ t_img	new_img(int w, int h, t_ventana window)
 	image.h = h;
 	return (image);
 }
-
+int	ft_exit(void)
+{
+	exit(0);
+}
 int	main()
 {
 	t_ventana a;
@@ -100,7 +103,7 @@ int	main()
 		{
 			re = -2.0 + (double)x * (2.0 - (-2.0)) / 1000;
 			im = max_im + (double)y * (-2.0 - 2.0) / 1000;
-			i = ft_is_in_julia(-0.745429, 0.05);
+			i = ft_is_in_julia(re, im);
 			if(i)
 				put_pixel_img(png, x, y, (0xFCBE11) * i);
 			// ft_mandelbrot(re,im);
@@ -110,9 +113,13 @@ int	main()
 	}
 	mlx_put_image_to_window (png.win.mlx_ptr, png.win.win_ptr, png.img_ptr, 0, 0);
 	mlx_key_hook (a.win_ptr, read_keys, &png);
+	//mlx_key (a.win_ptr, 2, 0, read_keys, &png);
+	mlx_hook (a.win_ptr, 5, 0, mouse_handler , &png);
+	mlx_hook (a.win_ptr, 6, 0, mouse_handler , &png);
+	mlx_hook (a.win_ptr, 17, 0, ft_exit , &png);
 	mlx_loop(a.mlx_ptr);
 	
-	return (0);
+	exit (0);
 }
 // int	main()
 // {
