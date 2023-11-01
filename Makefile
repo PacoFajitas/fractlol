@@ -6,7 +6,7 @@
 #    By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/18 01:41:07 by tfiguero          #+#    #+#              #
-#    Updated: 2023/09/28 06:21:59 by tfiguero         ###   ########.fr        #
+#    Updated: 2023/10/05 23:31:56 by tfiguero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,9 +43,10 @@ $(D_OBJ)/%.o: $(L_SRC)/%.c
 
 $(NAME):: $(OBJ)
 	$(CC) $(FLAGS) $(OBJ) $(L_ML) $(FRAME) -o $(NAME) $(INC)
-	
-$(NAME)::
+
+$(NAME) ::
 	@echo "Hello, $(NAME) already compiled 🌚"
+	
 .PHONY: clean fclean re
 
 fclean: clean

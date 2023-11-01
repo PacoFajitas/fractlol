@@ -6,18 +6,23 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 02:03:42 by tfiguero          #+#    #+#             */
-/*   Updated: 2023/09/29 11:20:18 by tfiguero         ###   ########.fr       */
+/*   Updated: 2023/11/01 23:52:44 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
  #include "../inc/fractol.h"
  # include "../miniLibX/mlx.h"
+ 
 
-int     exit_tutorial(t_ventana *window);
+ void	ft_check_args(int argc, char **argv, t_fractol fractal)
+ {
 
-int get_color()
+ }
+int     ft_exit(t_ventana *window)
 {
-        return (rand() % 2147483647);
+	if (window)
+		mlx_destroy_window (window->mlx_ptr, window->win_ptr);
+	exit(EXIT_SUCCESS);
 }
 
 int     read_keys(int key_pressed, void *param)
@@ -26,24 +31,13 @@ int     read_keys(int key_pressed, void *param)
 
         img = (t_img *)param;
         if (key_pressed == ESC || !img)
-                exit_tutorial(&img->win);
-        // else if (key_pressed == FOLLOW)
-        //         follow = !follow;
-        // else if (key_pressed == COLOR)
-        //         color = get_color();
-        //else if (key_pressed == PENGUIN)
-        //        penguin(*img);
+                ft_exit(&img->win);
         else
                 return (-1);
         mlx_put_image_to_window(img->win.mlx_ptr, img->win.win_ptr, img->img_ptr, 0, 0);
         return (0);
 }
-int     exit_tutorial(t_ventana *window)
-{
-	if (window)
-		mlx_destroy_window (window->mlx_ptr, window->win_ptr);
-	exit(EXIT_SUCCESS);
-}
+
 
 void	put_pixel_img(t_img img, int x, int y, int color)
 {
@@ -53,12 +47,15 @@ void	put_pixel_img(t_img img, int x, int y, int color)
 	*(unsigned int *) dst = color;
 }
 
-t_ventana new_program(int w, int h, char *str)
+t_ventana new_program(char *str)
 {
-	void	*mlx_ptr;
+	t_ventana ret;
 
-	mlx_ptr = mlx_init();
-	return ((t_ventana) {mlx_ptr, mlx_new_window(mlx_ptr, w, h, str), w, h});
+	ret.mlx_ptr = mlx_init();
+	ret.height = HEIGHT;
+	ret.width = WIDTH;
+	ret.win_ptr = mlx_new_window(ret.mlx_ptr, ret.width, ret.height, str);
+	return (ret);
 }
 
 t_img	new_img(int w, int h, t_ventana window)
@@ -73,51 +70,52 @@ t_img	new_img(int w, int h, t_ventana window)
 	image.h = h;
 	return (image);
 }
-int	ft_exit(void)
+// int	ft_mouse_handler(int param, t_img *png)
+// {
+// 	printf("%");
+// 	return(1);
+// }
+int	main(int argc, char **argv)
 {
-	exit(0);
-}
-int	main()
-{
-	t_ventana a;
-	t_img png;
+	t_fractol fractal;
 	double	y;
 	double	x;
 	int		max_im;
 	double	re;
 	double	im;
 	int		i;
-	
-	a = new_program(1000, 1000, "Fractlol");
-	if (!a.mlx_ptr || !a.win_ptr)
+
+	ft_check_args(argc, argv, fractal);
+	fractal.imagen.win = new_program("Fractlol");
+	if (!fractal.imagen.win.mlx_ptr || !fractal.imagen.win.win_ptr)
 		return (1);
-	png = new_img(1000, 1000, a);
+	fractal.imagen = new_img(WIDTH, HEIGHT, fractal.imagen.win);
 
 	x = 0;
-	mlx_clear_window(a.mlx_ptr, a.win_ptr);
-	max_im = -2.0 + (2.0 - (-2.0)) * 1000 / 1000;
-	while (x < png.h)
+	mlx_clear_window(fractal.imagen.win.mlx_ptr, fractal.imagen.win.win_ptr);
+	max_im = -2.0 + (2.0 - (-2.0)) * WIDTH / HEIGHT;
+	while (x < fractal.imagen.h)
 	{
 		y = 0;
-		while (y < png.w)
+		while (y < fractal.imagen.w)
 		{
-			re = -2.0 + (double)x * (2.0 - (-2.0)) / 1000;
-			im = max_im + (double)y * (-2.0 - 2.0) / 1000;
-			i = ft_is_in_julia(re, im);
+			re = -2.0 + (double)x * (2.0 - (-2.0)) / WIDTH;
+			im = max_im + (double)y * (-2.0 - 2.0) / HEIGHT;
+			i = ft_is_in_mandelbrot(re, im);
 			if(i)
-				put_pixel_img(png, x, y, (0xFCBE11) * i);
+				put_pixel_img(fractal.imagen, x, y, (0x00ACCB) * i/2);
 			// ft_mandelbrot(re,im);
 			y++;
 		}
 		x++;
 	}
-	mlx_put_image_to_window (png.win.mlx_ptr, png.win.win_ptr, png.img_ptr, 0, 0);
-	mlx_key_hook (a.win_ptr, read_keys, &png);
+	mlx_put_image_to_window (fractal.imagen.win.mlx_ptr, fractal.imagen.win.win_ptr, fractal.imagen.img_ptr, 0, 0);
+	mlx_key_hook (fractal.imagen.win.win_ptr, read_keys, &fractal.imagen);
 	//mlx_key (a.win_ptr, 2, 0, read_keys, &png);
-	mlx_hook (a.win_ptr, 5, 0, mouse_handler , &png);
-	mlx_hook (a.win_ptr, 6, 0, mouse_handler , &png);
-	mlx_hook (a.win_ptr, 17, 0, ft_exit , &png);
-	mlx_loop(a.mlx_ptr);
+	// mlx_hook (a.win_ptr, 4, 0, ft_mouse_handler , &png);
+	// mlx_hook (a.win_ptr, 6, 0, mouse_handler , &png);
+	mlx_hook (fractal.imagen.win.win_ptr, 17, 0, ft_exit , &fractal.imagen);
+	mlx_loop(fractal.imagen.win.mlx_ptr);
 	
 	exit (0);
 }

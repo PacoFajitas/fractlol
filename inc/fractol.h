@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 01:59:40 by tfiguero          #+#    #+#             */
-/*   Updated: 2023/09/28 06:32:34 by tfiguero         ###   ########.fr       */
+/*   Updated: 2023/10/05 23:32:16 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,9 @@
 # include <stdio.h>
 # include <math.h>
 
-# define ESC 53   // key escape
-# define ENTER 36 // key "enter"
-# define FOLLOW 3 // key "f"
-# define COLOR 8  // key "c"
-# define UP 126   // key "arrow up"
-# define DOWN 125 // key "arrow down"
-# define PENGUIN 35 // key "p"
-# define RAND_COLOR 15 // key "r"
+# define ESC	53   // key escape
+# define HEIGHT 1000
+# define WIDTH	1000
 
 typedef struct  s_ventana
 {
@@ -46,6 +41,14 @@ typedef struct s_img
 	int			endian;
 	int			line_len;
 }				t_img;
+
+typedef	struct s_fractol
+{
+	t_img	imagen;
+	double	cx;
+	double	cy;
+}				t_fractol;
+
 
 
 void	ft_mandelbrot(double x, double y);
