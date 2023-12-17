@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 11:12:48 by tfiguero          #+#    #+#             */
-/*   Updated: 2023/10/04 17:30:46 by tfiguero         ###   ########.fr       */
+/*   Updated: 2023/12/06 19:49:35 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 //sustituyendo la z por el resultado de la iteracion anterior
 
 
-int	ft_is_in_julia(double cx, double cy)
+int	ft_is_in_julia(double cx, double cy, t_fractol *fractal)
 {
 	double	i;
 	int		k;
@@ -26,9 +26,9 @@ int	ft_is_in_julia(double cx, double cy)
 	double	y;
 	
 	k = 0;
-	x = 0.14;
-	y = 0.91;
-	while(k < 1000)
+	x = fractal->cx;
+	y = fractal->cy;
+	while(k < 70)
 	{
 		i = pow(cx,2) - pow(cy, 2) + x;//.0625
 		cy = 2 * cx * cy + y;//.5
@@ -50,29 +50,15 @@ int	ft_is_in_mandelbrot(double cx, double cy)
 	k = 0;
 	x = 0;
 	y = 0;
-	while(k < 10000)
+	while(k < 70)
 	{
 		i = pow(x,2) - pow(y, 2) + cx;//.0625
 		y = 2 * x * y + cy;//.5
 		x = i;
+		k++;
 		if(pow(x,2) + pow(y,2) > 4)
 			return(k);
-		k++;
 	}
 	return(0);
 
-}
-
-void	ft_mandelbrot(double x, double y)
-{
- 	int	i;
-	int	z;
-	double max_im;
-	double im;
-	i = 0;
-	max_im = 0;
-	z = 0;
-
-	im = ft_is_in_mandelbrot(x, y);
-	printf("%.8f", im);
 }

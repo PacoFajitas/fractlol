@@ -6,7 +6,7 @@
 #    By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/18 01:41:07 by tfiguero          #+#    #+#              #
-#    Updated: 2023/10/05 23:31:56 by tfiguero         ###   ########.fr        #
+#    Updated: 2023/12/06 19:48:08 by tfiguero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ MN_LIB = ./miniLibX/
 FRAME = -framework OpenGL -framework AppKit
 
 
-SRC = fract_ol.c render.c
+SRC = fract_ol.c render.c args_check.c mlx_func.c hooks.c
 L_SRC = ./src
 L_ML = ./miniLibX/libmlx.a
 INC =	-I ./inc/\
